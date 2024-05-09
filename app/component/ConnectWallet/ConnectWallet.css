@@ -1,0 +1,68 @@
+.wallet-button {
+  border: 2px solid black !important;
+  color: black !important;
+}
+
+.wallet-button:hover {
+  border: 2px solid grey !important;
+  color: white !important;
+}
+
+.custom-btn .wallet-adapter-button-trigger {
+  background-color: white;
+  color: #515151;
+}
+
+.custom-btn .wallet-adapter-button-trigger:hover {
+  background-color: rgb(245 245 245) !important;
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.3);
+}
+
+.custom-btn .wallet-adapter-dropdown-list {
+  background-color: white;
+}
+
+.custom-btn .wallet-adapter-dropdown-list-item {
+  color: #515151;
+}
+
+.custom-btn .wallet-adapter-dropdown-list-item:hover {
+  background-color: rgb(245 245 245) !important;
+}
+
+.wallet-adapter-modal-wrapper {
+  background-color: rgb(243, 243, 243);
+}
+
+.wallet-adapter-modal-title {
+  color: #515151;
+}
+
+.wallet-adapter-modal-list li button {
+  color: #515151;
+}
+
+.wallet-adapter-modal-list li button:hover {
+  color: #515151;
+  background-color: rgb(226, 226, 226) !important;
+}
+
+.wallet-adapter-modal-overlay {
+  background-color: rgba(209, 209, 209, 0.5);
+}
+
+.wallet-adapter-modal-list-more {
+  color: #515151 !important;
+}
+
+.wallet-adapter-modal-list-more svg {
+  fill: #515151 !important;
+}
+
+.wallet-adapter-modal-button-close {
+  background-color: rgb(243, 243, 243);
+}
+
+.wallet-adapter-modal-button-close:hover svg {
+  fill: #242424 !important;
+}
