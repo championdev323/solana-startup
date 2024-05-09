@@ -1,18 +1,20 @@
-'use client';
+"use client";
 
 import {
   WalletProvider,
   ConnectionProvider,
-} from '@solana/wallet-adapter-react';
-import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+} from "@solana/wallet-adapter-react";
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import {
   AlphaWalletAdapter,
   LedgerWalletAdapter,
   SolflareWalletAdapter,
-} from '@solana/wallet-adapter-wallets';
-import { FC, useMemo } from 'react';
+} from "@solana/wallet-adapter-wallets";
 
-import '@solana/wallet-adapter-react-ui/styles.css';
+import * as web3 from "@solana/web3.js";
+import { FC, useMemo } from "react";
+
+import "@solana/wallet-adapter-react-ui/styles.css";
 
 type Props = {
   children?: React.ReactNode;
@@ -20,7 +22,9 @@ type Props = {
 
 export const Wallet: FC<Props> = ({ children }) => {
   //input your RPC as your endpoint value
-  const endpoint = 'https://api-devnet.helius.xyz';
+  const endpoint = "https://api.devnet.solana.com";
+
+  // const endpoint = web3.clusterApiUrl("devnet");
 
   const wallets = useMemo(
     () => [
