@@ -3,9 +3,11 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useWallet, useConnection } from "@solana/wallet-adapter-react";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
+
+import * as web3 from "@solana/web3.js";
 
 import "./ConnectWallet.css";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 const WalletMultiButtonDynamic = dynamic(
   async () =>
@@ -15,7 +17,7 @@ const WalletMultiButtonDynamic = dynamic(
 
 const ConnectWallet = () => {
   const [balance, setBalance] = useState<any>(0);
-  const { publicKey } = useWallet();
+  const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
 
   useEffect(() => {
@@ -32,8 +34,6 @@ const ConnectWallet = () => {
     );
 
     connection.getAccountInfo(publicKey).then((info) => {
-      console.log(info);
-
       setBalance(info?.lamports);
     });
   }, [connection, publicKey]);
