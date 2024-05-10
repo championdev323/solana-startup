@@ -22,9 +22,9 @@ type Props = {
 
 export const Wallet: FC<Props> = ({ children }) => {
   //input your RPC as your endpoint value
-  const endpoint = "https://api.devnet.solana.com";
+  // const endpoint = "https://api.devnet.solana.com";
 
-  // const endpoint = web3.clusterApiUrl("devnet");
+  const endpoint = web3.clusterApiUrl("devnet");
 
   const wallets = useMemo(
     () => [
