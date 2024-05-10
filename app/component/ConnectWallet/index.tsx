@@ -17,7 +17,7 @@ const WalletMultiButtonDynamic = dynamic(
 
 const ConnectWallet = () => {
   const [balance, setBalance] = useState<any>(0);
-  const { publicKey, sendTransaction } = useWallet();
+  const { publicKey } = useWallet();
   const { connection } = useConnection();
 
   useEffect(() => {
