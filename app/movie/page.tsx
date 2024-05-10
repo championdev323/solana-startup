@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MovieModel from "@/models/Movie";
 
 import * as web3 from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 import Toast from "@/components/Toast";
+import MovieCard from "@/components/MovieCard";
 
 const MOVIE_REVIEW_PROGRAM_ID =
   process.env.PUBLIC_MOVIE_REVIEW_PROGRAM_ID ||
@@ -16,12 +17,15 @@ const Movie = () => {
   const [title, setTitle] = useState("");
   const [rating, setRating] = useState<number>(0);
   const [message, setMessage] = useState("");
+  const [movies, setMovies] = useState<MovieModel[]>([]);
+
+  const [pageSize, setPageSize] = useState(5);
+  const [pageNumber, setPageNumber] = useState(0);
 
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     const movie = new MovieModel(title, rating, message);
     handleTransactionSubmit(movie);
   };
@@ -66,6 +70,10 @@ const Movie = () => {
 
     try {
       let txid = await sendTransaction(transaction, connection);
+
+      const _newMovies = [movie, ...movies];
+      setMovies(_newMovies);
+
       console.log(
         `Transaction submitted: https://explorer.solana.com/tx/${txid}?cluster=devnet`
       );
@@ -74,12 +82,23 @@ const Movie = () => {
     }
   };
 
+  useEffect(() => {
+    connection
+      .getProgramAccounts(new web3.PublicKey(MOVIE_REVIEW_PROGRAM_ID))
+      .then(async (accounts) => {
+        const movies: any = accounts.map(({ account }) => {
+          return MovieModel.deserialize(account.data);
+        });
+        setMovies(movies);
+      });
+  }, []);
+
   return (
     <>
       <div className="grid grid-cols-2 gap-12">
         <div className="flex flex-col space-y-2 w-full pt-10 pl-24">
           <h2 className="text-center pl-[20%] text-3xl font-bold text-gray-500">
-            Create New Moview Review
+            Create New Movie Review
           </h2>
           <div className="flex">
             <label className="leading-10 text-lg pr-2 font-bold text-gray-500 w-[20%] text-right">
@@ -124,13 +143,24 @@ const Movie = () => {
             />
           </div>
           <button
-            //   onClick={sendSol}
+            onClick={handleSubmit}
             className="bg-white-500 hover:bg-gray-100 text-gray-500 font-bold py-2 px-4 rounded border border-gray-200 w-[80%] ml-[20%]"
           >
             Submit Movie Review
           </button>
         </div>
-        <div className="flex flex-col pt-10">Movie Lists</div>
+        <div className="flex flex-col p-10 pl-0 space-y-2">
+          {/* {movies.length &&
+            movies.map((movie, i) => <div key={i}>{movie?.title}</div>)} */}
+          <h2 className="text-center text-3xl font-bold text-gray-500">
+            Moview Review Lists
+          </h2>
+          {movies.length
+            ? movies
+                .slice(pageNumber * pageSize, (pageNumber + 1) * pageSize)
+                .map((movie) => <MovieCard movie={movie} />)
+            : null}
+        </div>
       </div>
       <Toast />
     </>

@@ -8,7 +8,7 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import {
   AlphaWalletAdapter,
   LedgerWalletAdapter,
-  SolflareWalletAdapter,
+  // SolflareWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
 
 import * as web3 from "@solana/web3.js";
@@ -28,7 +28,7 @@ export const Wallet: FC<Props> = ({ children }) => {
 
   const wallets = useMemo(
     () => [
-      new SolflareWalletAdapter(),
+      // new SolflareWalletAdapter(),
       new AlphaWalletAdapter(),
       new LedgerWalletAdapter(),
     ],
